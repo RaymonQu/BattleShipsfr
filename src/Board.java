@@ -55,7 +55,7 @@ public class Board {
         int counter;
         if (direction.toUpperCase().equals("W")) {
             counter = column;
-            if (column - ship.getSize() > 0 && doesNotOverlap(row, column, ship.getSize(), "E")) {
+            if (column - ship.getSize() > 0 && doesNotOverlap(row, column, ship.getSize(), "W")) {
                 for(int i = 0; i < ship.getSize(); i++){
                     if(!hidden){
                         Board[row][counter].setSymbol(ship.getSignifier());
@@ -66,13 +66,14 @@ public class Board {
                 }
             }
             else{
+                System.out.println("not work");
                 return false;
             }
         }
         else if(direction.toUpperCase().equals("E")){
             counter = column;
             System.out.println(column + "," + ship.getSize() + ", " + row);
-            if (column + ship.getSize() < 10  && doesNotOverlap(row, column, ship.getSize(), "W")) {
+            if (column + ship.getSize() < 10  && doesNotOverlap(row, column, ship.getSize(), "E")) {
                 for(int i = 0; i < ship.getSize(); i++){
                     if(!hidden){
                         Board[row][counter].setSymbol(ship.getSignifier());
@@ -84,6 +85,7 @@ public class Board {
                 }
             }
             else{
+                System.out.println("not work");
                 return false;
             }
         }
@@ -94,13 +96,14 @@ public class Board {
                     if(!hidden){
                         Board[counter][column].setSymbol(ship.getSignifier());
                     }
-                    ship.addSpaces(new Spaces(row, counter, true));
+                    ship.addSpaces(new Spaces(counter, column, true));
                     counter++;
                     System.out.println("HI??");
 
                 }
             }
             else{
+                System.out.println("not work");
                 return false;
             }
         }
@@ -111,19 +114,19 @@ public class Board {
                     if(!hidden){
                         Board[counter][column].setSymbol(ship.getSignifier());
                     }
-                    ship.addSpaces(new Spaces(row, counter, true));
+                    ship.addSpaces(new Spaces(counter, column, true));
                     counter--;
                     System.out.println("HI???");
                 }
             }
             else{
+                System.out.println("not work");
                 return false;
             }
         }
         return true;
     }
-//NEED TO IMPLEMENT RANDOM PLACEMENTS, ANOTHER CONDITIONAL IN EACH WHILE LOOP, the new METHOD I JSUT MADE THEN
-// USING RANDOM NUMS TO FIND STUFF. THEN SHOULD BE SMOOTH SAILING FROM THERE
+
     public void randomlyPutShipsOnHiddenBoard(){
         int counter = 0;
         while(counter < 5) {
@@ -193,7 +196,7 @@ public class Board {
             realDir = "E";
         }
         if(direction == 2){
-            realDir = "E";
+            realDir = "W";
         }
         if(direction == 3){
             realDir = "N";
