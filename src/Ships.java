@@ -5,15 +5,15 @@ public class Ships {
     private boolean isDead;
     private boolean isHit;
     private String signifier;
-    private ArrayList<String> coords;
-    // A = aircraft car B = battle C= cruiser d = destroyer s= submarine
+    private ArrayList<Spaces> spaces;
+    // A = aircraft car B = battle C= cruiser D = destroyer s= submarine
 
     public Ships(int size, String signifier){
         this.size = size;
         isDead = false;
         isHit = false;
         this.signifier = signifier;
-        coords = new ArrayList<String>();
+        spaces = new ArrayList<Spaces>();
     }
 
     public int getSize(){
@@ -44,12 +44,12 @@ public class Ships {
         return signifier;
     }
 
-    public void setCoords(ArrayList<String> locs){
-        coords.addAll(locs);
+    public void addSpaces(Spaces space){
+        spaces.add(space);
     }
 
-    public ArrayList<String> getCoords(){
-        return coords;
+    public ArrayList<Spaces> getSpaces(){
+        return spaces;
     }
 
 }

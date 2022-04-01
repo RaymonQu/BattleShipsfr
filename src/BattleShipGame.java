@@ -17,17 +17,13 @@ public class BattleShipGame {
         scan.nextLine();
         System.out.println("This is your board. Where would you like to place your 2 tile long destroyer?");
         player.getBoard().createBoard();
-        player.getBoard().printBoard();
-        Scan
-    }
-
-
-    public void shoot(int row, int column){
-        player.getBoard().setMissOrHit(row, column);
+        player.getBoard().randomlyPutShipsOnHiddenBoard();
+        updateBoard();
     }
 
     public void updateBoard(){
         player.getBoard().printBoard();
+        player.getBoard().printHiddenBoard();
     }
 
 }
