@@ -53,74 +53,103 @@ public class Board {
 
     public boolean putShipOnBoard(Ships ship, int row, int column, String direction, boolean hidden){
         int counter;
+        Spaces[][] whichBoard;
+        if(hidden){
+            whichBoard = hiddenBoard;
+        }
+        else{
+            whichBoard = Board;
+        }
         if (direction.toUpperCase().equals("W")) {
             counter = column;
-            if (column - ship.getSize() > 0 && doesNotOverlap(row, column, ship.getSize(), "W")) {
+            if (column - ship.getSize() > 0 && doesNotOverlap(row, column, ship.getSize(), "W", whichBoard)) {
                 for(int i = 0; i < ship.getSize(); i++){
+                    Spaces newSpace = null;
                     if(!hidden){
+                        newSpace = new Spaces(row, counter, true);
+                        Board[row][counter] = newSpace;
                         Board[row][counter].setSymbol(ship.getSignifier());
                     }
-                    ship.addSpaces(new Spaces(row, counter, true));
+                    else {
+                        newSpace = new Spaces(counter, column, true);
+                        hiddenBoard[row][counter] = newSpace;
+                        hiddenBoard[row][counter].setSymbol(ship.getSignifier());
+                    }
+                    ship.addSpaces(newSpace);
                     counter--;
-                    System.out.println("HI");
                 }
             }
             else{
-                System.out.println("not work");
                 return false;
             }
         }
         else if(direction.toUpperCase().equals("E")){
             counter = column;
             System.out.println(column + "," + ship.getSize() + ", " + row);
-            if (column + ship.getSize() < 10  && doesNotOverlap(row, column, ship.getSize(), "E")) {
+            if (column + ship.getSize() < 10  && doesNotOverlap(row, column, ship.getSize(), "E", whichBoard)) {
                 for(int i = 0; i < ship.getSize(); i++){
+                    Spaces newSpace = null;
                     if(!hidden){
+                        newSpace = new Spaces(row, counter, true);
+                        Board[row][counter] = newSpace;
                         Board[row][counter].setSymbol(ship.getSignifier());
                     }
-                    ship.addSpaces(new Spaces(row, counter, true));
+                    else {
+                        newSpace = new Spaces(counter, column, true);
+                        hiddenBoard[row][counter] = newSpace;
+                        hiddenBoard[row][counter].setSymbol(ship.getSignifier());
+                    }
+                    ship.addSpaces(newSpace);
                     counter++;
-                    System.out.println("HI?");
-
                 }
             }
             else{
-                System.out.println("not work");
                 return false;
             }
         }
         else if(direction.toUpperCase().equals("S")){
             counter = row;
-            if (row + ship.getSize() < 10  && doesNotOverlap(row, column, ship.getSize(), "S")) {
+            if (row + ship.getSize() < 10  && doesNotOverlap(row, column, ship.getSize(), "S", whichBoard)) {
                 for(int i = 0; i < ship.getSize(); i++){
+                    Spaces newSpace = null;
                     if(!hidden){
+                        newSpace = new Spaces(counter, column, true);
+                        Board[counter][column] = newSpace;
                         Board[counter][column].setSymbol(ship.getSignifier());
                     }
-                    ship.addSpaces(new Spaces(counter, column, true));
+                    else {
+                        newSpace = new Spaces(counter, column, true);
+                        hiddenBoard[counter][column] = newSpace;
+                        hiddenBoard[counter][column].setSymbol(ship.getSignifier());
+                    }
+                    ship.addSpaces(newSpace);
                     counter++;
-                    System.out.println("HI??");
-
                 }
             }
             else{
-                System.out.println("not work");
                 return false;
             }
         }
         else if(direction.toUpperCase().equals("N")){
             counter = row;
-            if (row - ship.getSize() > 0 && doesNotOverlap(row, column, ship.getSize(), "N")) {
+            if (row - ship.getSize() > 0 && doesNotOverlap(row, column, ship.getSize(), "N", whichBoard)) {
                 for(int i = 0; i < ship.getSize(); i++){
+                    Spaces newSpace = null;
                     if(!hidden){
+                        newSpace = new Spaces(counter, column, true);
+                        Board[counter][column] = newSpace;
                         Board[counter][column].setSymbol(ship.getSignifier());
                     }
-                    ship.addSpaces(new Spaces(counter, column, true));
+                    else {
+                        newSpace = new Spaces(counter, column, true);
+                        hiddenBoard[counter][column] = newSpace;
+                        hiddenBoard[counter][column].setSymbol(ship.getSignifier());
+                    }
+                    ship.addSpaces(newSpace);
                     counter--;
-                    System.out.println("HI???");
                 }
             }
             else{
-                System.out.println("not work");
                 return false;
             }
         }
@@ -137,7 +166,6 @@ public class Board {
                     if(putShipOnBoard(newboat, row, column, randomDir(), true)){
                         counter++;
                         hiddenBoats.add(newboat);
-                        System.out.println("YES");
                     }
                 }
                 if(counter == 1){
@@ -147,7 +175,6 @@ public class Board {
                     if(putShipOnBoard(newboat, row, column, randomDir(), true)){
                         counter++;
                         hiddenBoats.add(newboat);
-                        System.out.println("YES!");
                     }
                 }
                 if(counter == 2){
@@ -157,7 +184,6 @@ public class Board {
                     if(putShipOnBoard(newboat, row, column, randomDir(), true)){
                         counter++;
                         hiddenBoats.add(newboat);
-                        System.out.println("YES!!");
                     }
                 }
                 if(counter == 3){
@@ -167,7 +193,6 @@ public class Board {
                     if(putShipOnBoard(newboat, row, column, randomDir(), true)){
                         counter++;
                         hiddenBoats.add(newboat);
-                        System.out.println("YES!!!");
                     }
                 }
                 if(counter == 4){
@@ -177,7 +202,6 @@ public class Board {
                     if(putShipOnBoard(newboat, row, column, randomDir(), true)){
                         counter++;
                         hiddenBoats.add(newboat);
-                        System.out.println("YES!!!!");
                     }
                 }
         }
@@ -207,28 +231,28 @@ public class Board {
         return realDir;
     }
 
-    private boolean doesNotOverlap(int row, int column, int size, String direction){
+    public static boolean doesNotOverlap(int row, int column, int size, String direction, Spaces[][] notRelatedToOtherBoard){
         for(int i = 0; i < size; i++){
             if(direction.equals("W")){
-                if(hiddenBoard[row][column].partOfBoat()){
+                if(notRelatedToOtherBoard[row][column].partOfBoat()){
                     return false;
                 }
                 column--;
             }
             if(direction.equals("E")){
-                if(hiddenBoard[row][column].partOfBoat()){
+                if(notRelatedToOtherBoard[row][column].partOfBoat()){
                     return false;
                 }
                 column++;
             }
             if(direction.equals("S")){
-                if(hiddenBoard[row][column].partOfBoat()){
+                if(notRelatedToOtherBoard[row][column].partOfBoat()){
                     return false;
                 }
                 row++;
             }
             if(direction.equals("N")){
-                if(hiddenBoard[row][column].partOfBoat()){
+                if(notRelatedToOtherBoard[row][column].partOfBoat()){
                     return false;
                 }
                 row--;
