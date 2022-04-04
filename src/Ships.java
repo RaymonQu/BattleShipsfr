@@ -1,53 +1,45 @@
 import java.util.ArrayList;
-
+/** represents a single boat
+ * */
 public class Ships {
+    /** represents the amount of tiles taken */
     private int size;
-    private boolean isDead;
-    private boolean isHit;
+    /** the letter used on the board*/
     private String signifier;
+    /** every ship has spaces which it represents*/
     private ArrayList<Spaces> spaces;
-    // A = aircraft car B = battle C= cruiser D = destroyer s= submarine
 
+    /** initializes all the variables*/
     public Ships(int size, String signifier){
         this.size = size;
-        isDead = false;
-        isHit = false;
         this.signifier = signifier;
         spaces = new ArrayList<Spaces>();
     }
 
+    /** gets size
+     *
+     * @return ship size
+     * */
     public int getSize(){
         return size;
     }
 
-    public void makeHit(){
-        isHit = true;
-    }
-
-    public boolean isHit(){
-        return isHit;
-    }
-
-    public void setDead(){
-        isDead = true;
-    }
-
-    public boolean getStatus(){
-        return isDead;
-    }
-
-    public void setSignifier(String letter){
-        signifier = letter;
-    }
-
+    /** gets signifier
+     *
+     * @return space signifier.
+     * */
     public String getSignifier(){
         return signifier;
     }
 
+    /** adds spaces to its arraylist of spaces, called spaces*/
     public void addSpaces(Spaces space){
         spaces.add(space);
     }
 
+    /** gets the arraylist of spaces, spaces
+     *
+     * @return spaces*/
     public ArrayList<Spaces> getSpaces(){
         return spaces;
     }
